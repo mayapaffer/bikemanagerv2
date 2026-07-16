@@ -28,3 +28,17 @@ listarBicicletas()
 editarBicicleta(6, "Caloi", "Vulcan", 29, "NOVO123")
 
 listarBicicletas()
+
+listarOrdensServicos()
+
+cadastrarOrdemServico(1, 6, "Revisão Geral", 120)
+
+buscarOrdemServico(1)
+
+editarOrdemServico(1, "Troca de relação", 250, "Em andamento")
+
+listarOrdensServicos()
+
+excluirOrdem(1)
+
+listarOrdensServicos()
