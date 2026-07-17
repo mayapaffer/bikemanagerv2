@@ -39,6 +39,16 @@ editarOrdemServico(1, "Troca de relação", 250, "Em andamento")
 
 listarOrdensServicos()
 
-excluirOrdem(1)
+excluirOrdem()
+
+listarOrdensServicos()
+
+buscarOrdemServico(4)
+
+editarOrdemServico(1, "Troca de relação", 250, STATUS_FINALIZADA)
+
+listarOrdensServicos()
+
+alterarStatusOs(1, STATUS_ANDAMENTO)
 
 listarOrdensServicos()
