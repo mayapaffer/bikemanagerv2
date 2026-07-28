@@ -1,10 +1,10 @@
 
-const ordens = []
+const ordens = [] //array que vai receber todas as OS
 
-let proximoIdOrdem = 1
+let proximoIdOrdem = 1 //iComeça o id em 1 para nao repetir quando exlcuir alguma OS
 
-const STATUS_ABERTA = "Aberta"
-const STATUS_ANDAMENTO = "Em andamento"
+const STATUS_ABERTA = "Aberta" 
+const STATUS_ANDAMENTO = "Em andamento"  //status da os 
 const STATUS_FINALIZADA = "Finalizada"
 
 function cadastrarOrdemServico(clienteId, bicicletaId, servico, valor) {
@@ -35,7 +35,7 @@ function cadastrarOrdemServico(clienteId, bicicletaId, servico, valor) {
     ordens.push(novaOrdem)
 
     console.log(`Nova ordem #${novaOrdem.id} aberta com sucesso`)
-}
+} //cadastra ordem de serviço com id da bicicleta e do cliente, verifica se existe cliente ou bicicleta se nao existir ele retorna se existir ele abre uma nova OS 
 
 
 function listarOrdensServicos() {
@@ -92,9 +92,6 @@ function editarOrdemServico(id, novoServico, novoValor, novoStatus) {
         console.log(`Ordem de Serviço #${ordemEncontrada.id} foi atualizada com sucesso`)
 }
    
-
-  
-
 
 function excluirOrdem(id) {
 

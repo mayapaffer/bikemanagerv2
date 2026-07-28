@@ -1,7 +1,7 @@
 
-const bicicletas = []
+const bicicletas = [] //array vazio que vai receber as informações de cada bicicleta 
 
-let proximoIdBicicleta = 1
+let proximoIdBicicleta = 1 //incrementa o id da proxima bicicleta em mais 1, pra quando excluir nao usar o mesmo id 
 
 function cadastrarBicicleta(clienteId, marca, modelo, aro, chassi) {
 
@@ -16,7 +16,7 @@ function cadastrarBicicleta(clienteId, marca, modelo, aro, chassi) {
     }
 
     bicicletas.push(novaBicicleta)
-}
+} //cadastra uma bicicleta e coloca no array bicicletas
 
 
 function listarBicicletas() { 
@@ -25,7 +25,7 @@ function listarBicicletas() {
     
         console.log(`ID: ${bicicleta.id} | Marca: ${bicicleta.marca} | Modelo: ${bicicleta.modelo} | Aro: ${bicicleta.aro} | Chassi: ${bicicleta.chassi}`)
     })
-}
+} //lista as bicicletas cadastradas no console 
 
 
 function buscarBicicleta(id) {
@@ -40,7 +40,7 @@ function buscarBicicleta(id) {
 
         console.log("Bicicleta nao encontrada")
     }
-}
+} //procura a bicicleta no array bicicletas e compara com id, se existir bicicleta ele lista se nao existir ele da erro
 
 
 function excluirBicicleta(id) {
@@ -57,16 +57,16 @@ function excluirBicicleta(id) {
 
         console.log("Bicicleta não encontrada")
     }
-}
+} //procura a bicicleta pelo id se existir ele exclui e se nao existir da erro
 
 
-function editarBicicleta(id, novamMarca, novoModelo, novoAro, novoChassi) {
+function editarBicicleta(id, novaMarca, novoModelo, novoAro, novoChassi) {
 
     const bicicletaEncontrada = bicicletas.find(bicicleta => bicicleta.id === id)
 
     if(bicicletaEncontrada) {
 
-        bicicletaEncontrada.marca = novamMarca
+        bicicletaEncontrada.marca = novaMarca
         bicicletaEncontrada.modelo = novoModelo
         bicicletaEncontrada.aro = novoAro
         bicicletaEncontrada.chassi = novoChassi
@@ -77,4 +77,4 @@ function editarBicicleta(id, novamMarca, novoModelo, novoAro, novoChassi) {
 
         console.log("Bicicleta não encontrada")
     }
-}
+} //procura no array bicicletas pelo id se existir ele altera marca modelo aro e chassi  

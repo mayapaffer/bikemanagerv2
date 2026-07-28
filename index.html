@@ -7,9 +7,193 @@
     <script defer src="js/bicicletas.js"></script>
     <script  defer src="js/ordens.js"></script>
     <script defer src="js/app.js"></script>
+    <link rel="stylesheet" href="style.css">
     <title>Bike Manager v2</title>
 </head>
 <body>
-    <h1>Bike Manager</h1>
+    <header>
+        <h1>🚲 Bike Manager v2</h1>
+    </header>
+    <main>
+
+        <h2 class="titulo-dashboard">Dashboard</h2>
+
+        <section class="dashboard">
+
+            <div class="card">
+                <h2>Clientes</h2>
+                <p>0</p>
+            </div>
+            <div class="card">
+                <h2>Bicicletas</h2>
+                <p>0</p>
+            </div>
+            <div class="card">
+                <h2>Ordens</h2>
+                <p>0</p>
+            </div>
+            <div class="card">
+                <h2>Faturamento</h2>
+                <p>0</p>
+            </div>
+            
+        </section>
+
+        <section class="formulario">
+
+            <h2>Cadastrar Cliente</h2>
+            
+            <form id="formCliente">
+
+                <div class="linha">
+                    <div class="campo">
+                        <label for="nome">Nome</label>
+                        <input type="text" id="nome" placeholder="Digite o nome do Cliente">
+                    </div>
+                    <div class="campo">
+                        <label for="telefone">Telefone</label>
+                        <input type="tel" id="telefone" placeholder="(82) 99999-9999">
+                    </div>
+                </div>
+
+                <button type="submit">Cadastrar Cliente</button>
+            </form>
+
+        </section>
+
+        <section class="formulario">
+
+            <h2>Cadastrar Bicicleta</h2>
+
+            <form id="formBicicleta">
+                <div class="linha">
+                    <div class="campo">
+                        <label for="marca">Marca da Bicicleta</label>
+                        <input type="text" id="marca" placeholder="Digite a Marca">
+                    </div>
+
+                    <div class="campo">
+                        <label for="modelo">Modelo da Bicicleta</label>
+                        <input type="text" id="modelo" placeholder="Digite o Modelo">
+                    </div>
+                </div>
+
+                <div class="linha">
+                    <div class="campo">
+                        <label for="aro">Aro</label>
+                        <select name="aro" id="aro">
+                            <option value="">Selecione o aro</option>
+                            <option value="16">16</option>
+                            <option value="20">20</option>
+                            <option value="24">24</option>
+                            <option value="26">26</option>
+                            <option value="29">29</option>
+                        </select>
+                    </div>
+
+                    <div class="campo">
+                        <label for="cor">Cor da Bicicleta</label>
+                        <input type="text" id="cor" placeholder="Digite a Cor">                   
+                    </div>
+                </div>
+
+                <div class="linha">
+                    <div class="campo">
+                        <label for="chassi">Chassi</label>
+                        <input type="text"  id="chassi" placeholder="Digite o chassi">
+                    </div>
+                </div>
+
+                <button type="submit">Cadastrar Bicicleta</button>
+            </form>
+        </section>
+
+        <section class="formulario">
+
+            <h2>Abrir Ordem de Serviço</h2>
+
+            <form id="formOrdem">
+                
+                <div class="linha">
+                    <div class="campo">
+                        <label for="cliente">Cliente</label>
+                        <select id="cliente">
+                            <option value="">Selecione o Cliente</option>
+                        </select>
+                    </div>
+                    <div class="campo">
+                        <label for="bicicleta">Bicicleta</label>
+                        <select id="bicicleta">
+                            <option value="">Selecione a bicicleta</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="linha">
+                    <div class="campo">
+                        <label for="servico">Serviço</label>
+                        <select id="servico">
+                            <option value="">Selecione o Serviço</option>
+                            <option value="revisao-geral">Revisão Geral</option>
+                            <option value="revisao-premium">Revisão Premium</option>
+                            <option value="lavagem">Lavagem</option>
+                            <option value="troca-relacao">Troca de relação</option>
+                            <option value="troca-pneu">Troca de Pneu</option>
+                        </select>
+                    </div>
+                    <div class="campo">
+                        <label for="valor">Valor</label>
+                        <input type="number" id="valor" placeholder="Digite o valor">
+                    </div>
+                </div>
+                <div class="linha">
+                    <div class="campo">
+                        <label for="status">Status</label>
+                        <select id="status">
+                            <option value="aberta">Aberta</option>
+                            <option value="em-espera">Em espera</option>
+                            <option value="aguardando-pecas">Aguardando peças</option>
+                            <option value="finalizada">Finalizada</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit">Abrir Ordem de Serviço</button>
+            </form>
+        </section>
+
+        <section class="tabela-container">
+
+            <h2>Ordens de Serviços</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Cliente</th>
+                        <th>Bicicleta</th>
+                        <th>Serviço</th>
+                        <th>Valor</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Mayã</td>
+                        <td>Caloi Vulcan</td>
+                        <td>Troca de Relação</td>
+                        <td>R$ 250,00</td>
+                        <td>Aberta</td>
+                        <td>
+                            <button class="btn-editar">Editar</button>
+                            <button class="btn-excluir">Excluir</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+    <footer></footer>
 </body>
 </html>

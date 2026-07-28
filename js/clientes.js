@@ -1,7 +1,7 @@
 
-const clientes = []
+const clientes = [] //array clientes que vai receber todos os clientes                   01 / petardo / 192318301   02 / maya / 192318301   03 / jonas / 192318301
 
-let proximoId = 1
+let proximoId = 1 //incrementa o id do cliente em mais um para que nao duplique id quando algum cliente for excluido
 
 function cadastrarCliente(nome, telefone) {
 
@@ -13,7 +13,7 @@ function cadastrarCliente(nome, telefone) {
     }
 
     clientes.push(novoCliente)
-}
+}  //cadastra o cliente com id nome e telefone e salva no array clientes 
 
 function listarClientes() {
     
@@ -21,7 +21,7 @@ function listarClientes() {
 
         console.log(`ID: ${cliente.id} | Nome: ${cliente.nome} | Telefone: ${cliente.telefone}`)
     })
-}
+} //lista os clientes no console com id nome e telefone 
 
 function buscarCliente(id) {
 
@@ -33,7 +33,7 @@ function buscarCliente(id) {
     } else { 
         console.log("Cliente não cadastrado")
     }
-}
+} //busca cliente pelo id no array clientes e se o cliente for encontrado ele mostra o id nome e telefone e se nao tiver ele diz que nao existe 
 
 
 function excluirCliente(id) {
@@ -50,7 +50,7 @@ function excluirCliente(id) {
         console.log("Cliente não encontrado")
     }
 
-}
+} //busca o cliente pelo id se existir ele exclui se não ele diz cliente não encontrado 
 
 
 function editarCliente(id, novoNome, novoTelefone) { 
@@ -68,4 +68,4 @@ function editarCliente(id, novoNome, novoTelefone) {
 
         console.log("Cliente não encontrado")
     }
-}
+} //busca o cliente pelo id e se existir ele altera o nome e o telefone 
