@@ -1,3 +1,5 @@
+console.log("Ordens carregou")
+console.log("Peças disponíveis:", window.pecas)
 
 const ordens = [] //array que vai receber todas as OS
 
@@ -6,6 +8,62 @@ let proximoIdOrdem = 1 //iComeça o id em 1 para nao repetir quando exlcuir algu
 const STATUS_ABERTA = "Aberta" 
 const STATUS_ANDAMENTO = "Em andamento"  //status da os 
 const STATUS_FINALIZADA = "Finalizada"
+
+const pecaOs = document.getElementById("pecaOs")
+const quantidadeOs = document.getElementById("quantidadeOs")
+const adicionarPecaOs = document.getElementById("adicionarPecaOs")
+
+const pecasDaOs = []
+
+adicionarPecaOs.addEventListener("click", function(){
+
+    console.log("Botão adicionar peça funcionando")
+
+    adicionarPecaNaOs()
+})
+
+function adicionarPecaNaOs() {
+
+    const pecaSelecionada = pecas.find(peca => peca.id === Number(pecaOs.value))
+
+    if(!pecaSelecionada) {
+
+        console.log("Selecione uma peça")
+        return
+    }
+
+    const quantidade = Number(quantidadeOs.value)
+
+    if(quantidade >  pecaSelecionada.quantidade) {
+
+        console.log("Quantidade indisponivel no estoque")
+        return
+    }
+
+    const novaPecaOs = {
+
+        pecaId: pecaSelecionada.id,
+        nome: pecaSelecionada.nome,
+        quantidade,
+        valorUnitario: pecaSelecionada.valor,
+        subtotal: quantidade * pecaSelecionada.valor
+    }
+
+    pecasDaOs.push(novaPecaOs)
+
+    console.log(pecasDaOs)
+}
+
+function calcularValorTotal(valorServico,  pecas) {
+
+        const valorPecas = pecas.reduce((total, peca) => {
+
+            return  total + peca.subtotal
+        }, 0)
+
+        return valorServico + valorPecas
+}
+
 
 function cadastrarOrdemServico(clienteId, bicicletaId, servico, valor) {
 
@@ -28,7 +86,9 @@ function cadastrarOrdemServico(clienteId, bicicletaId, servico, valor) {
         clienteId,
         bicicletaId,
         servico,
-        valor,
+        valorServico: valor,
+        pecas: [...pecasDaOs],
+        valorTotal: calcularValorTotal(valor, pecasDaOs),
         status: STATUS_ABERTA
     }
 
@@ -152,6 +212,24 @@ function mostrarOrdemServico(ordem) {
         return
     }
 
-    console.log(`ID: ${ordem.id} || Cliente: ${clienteDaOrdem.nome} || Bicicleta ${bicicletaDaOrdem.marca} ${bicicletaDaOrdem.modelo} || Serviço: ${ordem.servico} || Valor: ${ordem.valor} || Status: ${ordem.status}`)
+    console.log(`ID: ${ordem.id}`)
+    console.log(`Cliente: ${clienteDaOrdem.nome}`)
+    console.log(`Bicicleta: ${bicicletaDaOrdem.marca} ${bicicletaDaOrdem.modelo}`)
+    console.log(`Serviço: ${ordem.servico}`)
+    console.log(`Valor serviço: R$ ${ordem.valorServico.toFixed(2)}`)
 
+    console.log("Peças utilizadas:")
+
+    ordem.pecas.forEach(peca => {
+
+        console.log(
+            `${peca.nome} | Quantidade: ${peca.quantidade} | Subtotal: R$ ${peca.subtotal.toFixed(2)}`
+        )
+    })
+
+    console.log(`Valor serviço: R$ ${ordem.valorServico.toFixed(2)}`)
+    console.log(`Valor total: R$ ${ordem.valorTotal.toFixed(2)}`)
 }
+
+
+window.listarOrdensServicos = listarOrdensServicos
