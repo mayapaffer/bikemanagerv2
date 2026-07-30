@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script defer src="js/clientes.js"></script>
     <script defer src="js/bicicletas.js"></script>
-    <script  defer src="js/ordens.js"></script>
+    <script defer src="js/estoque.js"></script>
+    <script defer src="js/ordens.js"></script>
     <script defer src="js/app.js"></script>
     <link rel="stylesheet" href="style.css">
     <title>Bike Manager v2</title>
@@ -156,6 +157,19 @@
                         </select>
                     </div>
                 </div>
+                <div class="linha">
+                    <div class="campo">
+                        <label for="pecaOs">Peça</label>
+                        <select id="pecaOs">
+                            <option value="">Selecione a peça</option>
+                        </select>
+                    </div>
+                    <div class="campo">
+                        <label for="quantidadeOs">Quantidade</label>
+                        <input type="number" id="quantidadeOs" min="1" value="1">
+                    </div>
+                </div>
+                <button type="submit" id="adicionarPecaOs">Adicionar Peça</button>
                 <button type="submit">Abrir Ordem de Serviço</button>
             </form>
         </section>
@@ -190,6 +204,67 @@
                             <button class="btn-excluir">Excluir</button>
                         </td>
                     </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="formulario">
+
+            <h2>Cadastro de Peças</h2>
+
+            <form id="formEstoque">
+
+                <div class="linha">
+                    <div class="campo">
+                        <label for="nomePeca">Nome da Peça</label>
+                        <input type="text" id="nomePeca" placeholder="Ex: Camara 29" required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="quantidadePeca">Quantidade de Peças</label>
+                        <input type="text" id="quantidadePeca" placeholder="Quantidade de Peças" min="0" required>
+                    </div>
+                </div>
+
+                <div class="linha">
+                    <div class="campo">
+                        <label for="valorPeca">Valor</label>
+                        <input type="text" id="valorPeca" min="0" step="0.01" required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="statusPeca">Status</label>
+                        <select id="statusPeca">
+                            <option value="disponivel">Disponível</option>
+                            <option value="baixo-estoque">Baixo Estoque</option>
+                            <option value="indisponivel">Indisponível</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" id="botaoEstoque">Cadastrar Peça</button>
+            </form>
+
+        </section>
+
+        <section class="tabela-container">
+
+            <h2>Estoque</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Peça</th>
+                        <th>Quantidade</th>
+                        <th>Valor</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tabelaEstoque">
+
                 </tbody>
             </table>
         </section>
