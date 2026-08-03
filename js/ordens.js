@@ -12,6 +12,7 @@ const STATUS_FINALIZADA = "Finalizada"
 const pecaOs = document.getElementById("pecaOs")
 const quantidadeOs = document.getElementById("quantidadeOs")
 const adicionarPecaOs = document.getElementById("adicionarPecaOs")
+const tabelaOrdens = document.getElementById("tabelaOrdens")
 
 const pecasDaOs = []
 
@@ -94,7 +95,9 @@ function cadastrarOrdemServico(clienteId, bicicletaId, servico, valor) {
 
     ordens.push(novaOrdem)
 
-    console.log(`Nova ordem #${novaOrdem.id} aberta com sucesso`)
+    atualizarTabelaOrdens()
+
+    pecasDaOs.length = 0
 } //cadastra ordem de serviço com id da bicicleta e do cliente, verifica se existe cliente ou bicicleta se nao existir ele retorna se existir ele abre uma nova OS 
 
 
@@ -146,8 +149,9 @@ function editarOrdemServico(id, novoServico, novoValor, novoStatus) {
     }
 
         ordemEncontrada.servico = novoServico
-        ordemEncontrada.valor = novoValor
+        ordemEncontrada.valorServico = novoValor
         ordemEncontrada.status = novoStatus
+        ordemEncontrada.valorTotal = calcularValorTotal(novoValor, ordemEncontrada.pecas)
 
         console.log(`Ordem de Serviço #${ordemEncontrada.id} foi atualizada com sucesso`)
 }
@@ -166,6 +170,9 @@ function excluirOrdem(id) {
 
         console.log("Ordem de Serviço não existente")
     }
+
+    atualizarTabelaOrdens() 
+    console.log(`Ordem de Serviço #${id} excluída com sucesso`)
 }
 
 
@@ -229,6 +236,36 @@ function mostrarOrdemServico(ordem) {
 
     console.log(`Valor serviço: R$ ${ordem.valorServico.toFixed(2)}`)
     console.log(`Valor total: R$ ${ordem.valorTotal.toFixed(2)}`)
+}
+
+
+function atualizarTabelaOrdens() {
+    
+    tabelaOrdens.innerHTML = ""
+
+    ordens.forEach(ordem => {
+
+        const cliente = clientes.find(c => c.id === ordem.clienteId)
+        const bicicleta = bicicletas.find(b => b.id === ordem.bicicletaId)
+
+        const linha = document.createElement("tr")
+
+        linha.innerHTML = `
+          <td>${ordem.id}</td>
+          <td>${cliente.nome}</td>
+          <td>${bicicleta.marca} ${bicicleta.modelo}</td>
+          <td>${ordem.servico}</td>
+          <td>R$ ${ordem.valorTotal.toFixed(2)}</td>
+          <td>${ordem.status}</td>
+        
+          <td>
+                <button class="btn-editar" onclick="editarOrdemServico(${ordem.id})">Editar</button>
+                <button class="btn-excluir" onclick="excluirOrdem(${ordem.id})">Excluir</button>
+          </td>
+        `
+
+        tabelaOrdens.appendChild(linha)
+    })
 }
 
 

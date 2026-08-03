@@ -14,8 +14,11 @@ listarClientes()
 
 cadastrarBicicleta(1, "Caloi", "Elite", 29, "ABC123")
 cadastrarBicicleta(1, "Sense", "Move", 27, "XYZ789")
+atualizarTabelaBicicletas()
+
 
 listarBicicletas()
+
 
 buscarBicicleta(6)
 
@@ -52,3 +55,5 @@ listarOrdensServicos()
 alterarStatusOs(1, STATUS_ANDAMENTO)
 
 listarOrdensServicos()
+
+atualizarTabelaClientes()

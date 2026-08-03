@@ -40,7 +40,7 @@
             
         </section>
 
-        <section class="formulario">
+        <section class="formulario"> <!-- form cadastro clientes -->
 
             <h2>Cadastrar Cliente</h2>
             
@@ -62,7 +62,26 @@
 
         </section>
 
-        <section class="formulario">
+        <section class="tabela-container"> <!-- tabela cadastro clientes-->
+            
+            <h2>Clientes</h2>
+             
+            <table>
+                <thead> 
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Telefone</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                
+                <tbody id="tabelaClientes">
+                </tbody>
+            </table>
+        </section>
+
+        <section class="formulario"> <!-- form cadastro bicicletas-->
 
             <h2>Cadastrar Bicicleta</h2>
 
@@ -89,6 +108,7 @@
                             <option value="24">24</option>
                             <option value="26">26</option>
                             <option value="29">29</option>
+                            <option value="700">700</option>
                         </select>
                     </div>
 
@@ -109,7 +129,27 @@
             </form>
         </section>
 
-        <section class="formulario">
+        <section class="tabela-container"> <!-- tabela cadastro bicicletas-->
+
+            <h2>Bicicletas</h2>
+        
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Marca</th>
+                        <th>Modelo</th>
+                        <th>Aro</th>
+                        <th>Chassi</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tabelaBicicletas"></tbody>
+            </table>
+        </section>
+
+        <section class="formulario"> <!--form cadastro ordens de servico-->
 
             <h2>Abrir Ordem de Serviço</h2>
 
@@ -174,7 +214,7 @@
             </form>
         </section>
 
-        <section class="tabela-container">
+        <section class="tabela-container"> <!--tabela cadastro ordens de servico-->
 
             <h2>Ordens de Serviços</h2>
 
@@ -191,24 +231,13 @@
                     </tr>
                 </thead>
 
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Mayã</td>
-                        <td>Caloi Vulcan</td>
-                        <td>Troca de Relação</td>
-                        <td>R$ 250,00</td>
-                        <td>Aberta</td>
-                        <td>
-                            <button class="btn-editar">Editar</button>
-                            <button class="btn-excluir">Excluir</button>
-                        </td>
-                    </tr>
+                <tbody id="tabelaOrdens">
+
                 </tbody>
             </table>
         </section>
 
-        <section class="formulario">
+        <section class="formulario"> <!-- form cadastro estoque -->
 
             <h2>Cadastro de Peças</h2>
 
@@ -247,7 +276,7 @@
 
         </section>
 
-        <section class="tabela-container">
+        <section class="tabela-container"> <!-- tabela cadastro estoque-->
 
             <h2>Estoque</h2>
 

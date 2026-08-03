@@ -1,6 +1,35 @@
 
 const clientes = [] //array clientes que vai receber todos os clientes                   01 / petardo / 192318301   02 / maya / 192318301   03 / jonas / 192318301
 
+const formCliente = document.getElementById("formCliente")
+const nome = document.getElementById("nome")
+const telefone = document.getElementById("telefone")
+
+formCliente.addEventListener("submit", function(event) {
+    
+    event.preventDefault()
+
+    if(clienteEditando !== null) { 
+        
+        editarCliente(
+
+            clienteEditando,
+            nome.value,
+            telefone.value
+        )
+
+        clienteEditando = null
+    } else { 
+        
+        cadastrarCliente(nome.value, telefone.value)
+    }
+
+    atualizarTabelaClientes()
+
+    formCliente.reset() 
+})
+
+let clienteEditando = null
 let proximoId = 1 //incrementa o id do cliente em mais um para que nao duplique id quando algum cliente for excluido
 
 function cadastrarCliente(nome, telefone) {
@@ -14,6 +43,31 @@ function cadastrarCliente(nome, telefone) {
 
     clientes.push(novoCliente)
 }  //cadastra o cliente com id nome e telefone e salva no array clientes 
+
+function atualizarTabelaClientes () {
+
+    const tabelaClientes = document.getElementById("tabelaClientes")
+
+    tabelaClientes.innerHTML = ""
+
+    clientes.forEach(cliente => {
+
+        const linha = document.createElement("tr")
+
+        linha.innerHTML = `
+        
+             <td>${cliente.id}</td>
+             <td>${cliente.nome}</td>
+             <td>${cliente.telefone}</td>
+             <td>
+                <button class="btn-editar" onclick="prepararEdicaoCliente(${cliente.id})">Editar</button>
+                <button class="btn-excluir" onclick="excluirCliente(${cliente.id})">Excluir</button>
+             </td>
+        `
+
+            tabelaClientes.appendChild(linha)
+    })
+}
 
 function listarClientes() {
     
@@ -45,6 +99,8 @@ function excluirCliente(id) {
         clientes.splice(indiceCliente, 1)
 
         console.log("Cliente excluído com sucesso")
+
+        atualizarTabelaClientes()
     } else {
         
         console.log("Cliente não encontrado")
@@ -64,8 +120,28 @@ function editarCliente(id, novoNome, novoTelefone) {
 
         console.log("Cliente atualizado com sucesso")
         console.log(clienteEncontrado)
+
+        atualizarTabelaClientes()
     } else {
 
         console.log("Cliente não encontrado")
     }
 } //busca o cliente pelo id e se existir ele altera o nome e o telefone 
+
+function prepararEdicaoCliente(id) {
+
+    const cliente = clientes.find(cliente => cliente.id === id)
+
+    if(!cliente) return 
+
+    nome.value = cliente.nome
+    telefone.value = cliente.telefone
+
+    clienteEditando = id
+}
+
+atualizarTabelaClientes()
+
+window.excluirCliente = excluirCliente
+window.editarCliente = editarCliente
+window.prepararEdicaoCliente = prepararEdicaoCliente
