@@ -1,7 +1,18 @@
 
 const bicicletas = [] //array vazio que vai receber as informações de cada bicicleta 
 
+const bicicletasSalvas = JSON.parse(localStorage.getItem("bicicletas"))
+
+if(bicicletasSalvas) {
+    bicicletas.push(...bicicletasSalvas)
+}
+
+window.addEventListener("load", function() {
+    atualizarTabelaBicicletas()
+})
+
 const tabelaBicicletas = document.getElementById("tabelaBicicletas")
+const botaoBicicleta =  document.getElementById("botaoBicicleta")
 
 const formBicicleta = document.getElementById("formBicicleta")
 const marca = document.getElementById("marca")
@@ -10,22 +21,40 @@ const aro = document.getElementById("aro")
 const chassi = document.getElementById("chassi")
 
 let proximoIdBicicleta = 1 //incrementa o id da proxima bicicleta em mais 1, pra quando excluir nao usar o mesmo id 
+let bicicletaEditando = null
 
 formBicicleta.addEventListener("submit", function(event) {
 
     event.preventDefault()
 
-    cadastrarBicicleta(
+    if(bicicletaEditando !== null) {
+
+        editarBicicleta(
+            bicicletaEditando,
+            marca.value,
+            modelo.value,
+            aro.value,
+            chassi.value
+        )
+
+        bicicletaEditando = null
+
+    } else {
+    
+        cadastrarBicicleta(
         1,
         marca.value,
         modelo.value,
         aro.value,
         chassi.value
-    )
+       )
+    }
     
     atualizarTabelaBicicletas()
 
     formBicicleta.reset() 
+
+    botaoBicicleta.textContent = "Cadastrar Bicileta"
 })
 
 function cadastrarBicicleta(clienteId, marca, modelo, aro, chassi) {
@@ -41,6 +70,8 @@ function cadastrarBicicleta(clienteId, marca, modelo, aro, chassi) {
     }
 
     bicicletas.push(novaBicicleta)
+
+    localStorage.setItem("bicicletas", JSON.stringify(bicicletas))
 } //cadastra uma bicicleta e coloca no array bicicletas
 
 
@@ -76,7 +107,11 @@ function excluirBicicleta(id) {
         
         bicicletas.splice(indiceBicicleta, 1) 
 
+        localStorage.setItem("bicicletas", JSON.stringify(bicicletas))
+
         console.log("Bicicleta excluida com sucesso")
+
+        atualizarTabelaBicicletas()
 
     } else {
 
@@ -95,6 +130,8 @@ function editarBicicleta(id, novaMarca, novoModelo, novoAro, novoChassi) {
         bicicletaEncontrada.modelo = novoModelo
         bicicletaEncontrada.aro = novoAro
         bicicletaEncontrada.chassi = novoChassi
+
+        localStorage.setItem("bicicletas", JSON.stringify(bicicletas))
 
         console.log("Bicicleta editada com sucesso")
         console.log(bicicletaEncontrada)
@@ -120,11 +157,30 @@ function atualizarTabelaBicicletas() {
              <td>${bicicleta.aro}</td>
              <td>${bicicleta.chassi}</td>
              <td>
-                <button class="btn-editar">Editar</button>
-                <button class="btn-excluir">Excluir</button>
+                <button class="btn-editar" onclick="prepararEdicaoBicicleta(${bicicleta.id})">Editar</button>
+                <button class="btn-excluir" onclick="excluirBicicleta(${bicicleta.id})">Excluir</button>    
              </td>
         `
 
         tabelaBicicletas.appendChild(linha)
     })
 }
+
+function prepararEdicaoBicicleta(id) {
+    
+    const bicicleta = bicicletas.find(bicicleta => bicicleta.id === id)
+
+    if(!bicicleta) return 
+
+    marca.value = bicicleta.marca
+    modelo.value = bicicleta.modelo
+    aro.value = bicicleta.aro
+    chassi.value = bicicleta.chassi
+
+    bicicletaEditando = id 
+    botaoBicicleta.textContent = "Salvar Alteração"
+}
+
+
+window.excluirBicicleta = excluirBicicleta
+window.prepararEdicaoBicicleta = prepararEdicaoBicicleta

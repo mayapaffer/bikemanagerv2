@@ -1,7 +1,21 @@
 
 const pecas = []
+const pecasSalvas = JSON.parse(localStorage.getItem("pecas"))
+
+if(pecasSalvas) {
+    pecas.push(...pecasSalvas)
+}
+
+window.addEventListener("load", function() {
+    atualizarPeca()
+})
 
 let proximaPeca = 1 
+
+if(pecas.length > 0) {
+
+    proximaPeca = Math.max(...pecas.map(peca => peca.id)) + 1
+}
 
 let pecaEditando = null 
 
@@ -50,6 +64,9 @@ function cadastrarPeca() {
         pecas.push(novaPeca)
 
     }
+
+    localStorage.setItem("pecas", JSON.stringify(pecas))
+
     atualizarPeca()
 
     formEstoque.reset()
@@ -116,6 +133,10 @@ function excluirPeca(id) {
     if (indice === -1) return
     
     pecas.splice(indice, 1)
+
+    console.log(ordens)
+
+    localStorage.setItem("ordens", JSON.stringify(ordens))
 
     atualizarPeca()
 }

@@ -125,7 +125,7 @@
                     </div>
                 </div>
 
-                <button type="submit">Cadastrar Bicicleta</button>
+                <button type="submit" id="botaoBicicleta">Cadastrar Bicicleta</button>
             </form>
         </section>
 
@@ -209,7 +209,26 @@
                         <input type="number" id="quantidadeOs" min="1" value="1">
                     </div>
                 </div>
-                <button type="submit" id="adicionarPecaOs">Adicionar Peça</button>
+                <button type="button" id="adicionarPecaOs">Adicionar Peça</button>
+                <div class="pecas-os-container">
+
+                    <h3>Peças adicionadas</h3>
+
+                        <table>
+                            <thead>
+                             <tr>
+                                   <th>Peça</th>
+                                  <th>Quantidade</th>
+                                  <th>Valor Unit.</th>
+                                <th>Subtotal</th>
+                             </tr>
+                            </thead>
+
+                             <tbody id="listaPecasOs">
+                             </tbody>
+                       </table>
+
+</div>
                 <button type="submit">Abrir Ordem de Serviço</button>
             </form>
         </section>

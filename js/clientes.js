@@ -1,6 +1,12 @@
 
 const clientes = [] //array clientes que vai receber todos os clientes                   01 / petardo / 192318301   02 / maya / 192318301   03 / jonas / 192318301
 
+const clientesSalvos = JSON.parse(localStorage.getItem("clientes"))
+
+if(clientesSalvos) {
+    clientes.push(...clientesSalvos)
+}
+
 const formCliente = document.getElementById("formCliente")
 const nome = document.getElementById("nome")
 const telefone = document.getElementById("telefone")
@@ -42,6 +48,8 @@ function cadastrarCliente(nome, telefone) {
     }
 
     clientes.push(novoCliente)
+
+    localStorage.setItem("clientes", JSON.stringify(clientes))
 }  //cadastra o cliente com id nome e telefone e salva no array clientes 
 
 function atualizarTabelaClientes () {
@@ -97,6 +105,8 @@ function excluirCliente(id) {
     if(indiceCliente !== -1) {
         
         clientes.splice(indiceCliente, 1)
+       
+        localStorage.setItem("clientes", JSON.stringify(clientes))
 
         console.log("Cliente excluído com sucesso")
 
@@ -117,6 +127,8 @@ function editarCliente(id, novoNome, novoTelefone) {
 
         clienteEncontrado.nome = novoNome
         clienteEncontrado.telefone = novoTelefone
+
+        localStorage.setItem("clientes", JSON.stringify(clientes))
 
         console.log("Cliente atualizado com sucesso")
         console.log(clienteEncontrado)

@@ -181,3 +181,28 @@ tbody tr:hover {
     padding:8px 12px;
     font-size:14px;
 }
+
+.pecas-os-container {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.pecas-os-container h3 {
+    margin-bottom: 10px;
+}
+
+.pecas-os-container table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.pecas-os-container th,
+.pecas-os-container td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.pecas-os-container th {
+    font-weight: bold;
+}

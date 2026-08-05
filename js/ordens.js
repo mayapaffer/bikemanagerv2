@@ -1,9 +1,14 @@
-console.log("Ordens carregou")
-console.log("Peças disponíveis:", window.pecas)
 
 const ordens = [] //array que vai receber todas as OS
 
+const ordensSalvas = JSON.parse(localStorage.getItem("ordens"))
+
+if(ordensSalvas) {
+    ordens.push(...ordensSalvas)
+}
+
 let proximoIdOrdem = 1 //iComeça o id em 1 para nao repetir quando exlcuir alguma OS
+let ordemEditando = null 
 
 const STATUS_ABERTA = "Aberta" 
 const STATUS_ANDAMENTO = "Em andamento"  //status da os 
@@ -14,7 +19,115 @@ const quantidadeOs = document.getElementById("quantidadeOs")
 const adicionarPecaOs = document.getElementById("adicionarPecaOs")
 const tabelaOrdens = document.getElementById("tabelaOrdens")
 
+
+const formOrdem = document.getElementById("formOrdem")
+
+const cliente =  document.getElementById("cliente")
+const bicicleta =  document.getElementById("bicicleta")
+const servico = document.getElementById("servico")
+const valor = document.getElementById("valor")
+
+const listaPecasOs = document.getElementById("listaPecasOs")
+
 const pecasDaOs = []
+
+window.addEventListener("load", function() {
+
+    atualizarTabelaOrdens()
+    atualizarSelectClientes()
+    atualizarSelectBicicletas()
+    atualizarSelectPecas()
+
+})
+
+function atualizarSelectPecas() {
+
+    pecaOs.innerHTML = '<option value="">Selecione a peça</option>'
+
+    pecas.forEach(peca => {
+
+        pecaOs.innerHTML += `
+            <option value="${peca.id}">
+                ${peca.nome} - Quantidade: ${peca.quantidade}
+            </option>
+        `
+    })
+}
+
+function atualizarSelectClientes() {
+
+    cliente.innerHTML = '<option value="">Selecione o Cliente</option>'
+
+    clientes.forEach(c => {
+
+        cliente.innerHTML += `
+            <option value="${c.id}">
+                ${c.nome}
+            </option>
+       `
+    })
+}
+
+function atualizarSelectBicicletas() {
+
+        bicicleta.innerHTML = '<option value="">Selecione a bicicleta</option>'
+
+        bicicletas.forEach(b => {
+
+        bicicleta.innerHTML += `
+            <option value="${b.id}">
+                ${b.marca} ${b.modelo}
+            </option>
+        `
+        })
+}
+
+function atualizarListaPecasOs() {
+
+    listaPecasOs.innerHTML = ""
+
+    pecasDaOs.forEach(peca => {
+
+        listaPecasOs.innerHTML += `
+            <tr>
+                <td>${peca.nome}</td>
+                <td>${peca.quantidade}</td>
+                <td>R$ ${peca.valorUnitario.toFixed(2)}</td>
+                <td>R$ ${peca.subtotal.toFixed(2)}</td>
+            </tr>
+        `
+    })
+}
+
+formOrdem.addEventListener("submit", function(event){
+
+        event.preventDefault()
+
+        if(ordemEditando !== null) {
+
+            editarOrdemServico(
+                ordemEditando,
+                servico.value,
+                Number(valor.value),
+                STATUS_ABERTA
+            )
+
+        } else {
+
+          cadastrarOrdemServico(
+            Number(cliente.value),
+            Number(bicicleta.value),
+            servico.value,
+            Number(valor.value)
+           )
+        }
+
+        ordemEditando = null 
+
+        atualizarTabelaOrdens()
+
+        formOrdem.reset() 
+})
 
 adicionarPecaOs.addEventListener("click", function(){
 
@@ -52,6 +165,8 @@ function adicionarPecaNaOs() {
 
     pecasDaOs.push(novaPecaOs)
 
+    atualizarListaPecasOs()
+
     console.log(pecasDaOs)
 }
 
@@ -66,12 +181,28 @@ function calcularValorTotal(valorServico,  pecas) {
 }
 
 
+function baixarEstoquePecas(pecasUsadas) {
+
+    pecasUsadas.forEach(pecaOs => {
+
+        const pecaEstoque = pecas.find(
+            peca => peca.id === pecaOs.pecaId 
+        )
+
+        if(pecaEstoque) {
+            
+            pecaEstoque.quantidade -= pecaOs.quantidade
+        }
+    })
+
+    localStorage.setItem("pecas", JSON.stringify(pecas))
+}
+
 function cadastrarOrdemServico(clienteId, bicicletaId, servico, valor) {
 
     const clienteExiste = clientes.find(cliente => cliente.id === clienteId)
 
     const bicicletaExiste =  bicicletas.find(bicicleta => bicicleta.id === bicicletaId)
-
 
     if(!clienteExiste || !bicicletaExiste) {
 
@@ -80,7 +211,9 @@ function cadastrarOrdemServico(clienteId, bicicletaId, servico, valor) {
         return
     }
     
-    
+    baixarEstoquePecas(pecasDaOs)
+
+
     const novaOrdem = {
         
         id: proximoIdOrdem++,
@@ -94,6 +227,8 @@ function cadastrarOrdemServico(clienteId, bicicletaId, servico, valor) {
     }
 
     ordens.push(novaOrdem)
+
+    localStorage.setItem("ordens", JSON.stringify(ordens))
 
     atualizarTabelaOrdens()
 
@@ -152,6 +287,8 @@ function editarOrdemServico(id, novoServico, novoValor, novoStatus) {
         ordemEncontrada.valorServico = novoValor
         ordemEncontrada.status = novoStatus
         ordemEncontrada.valorTotal = calcularValorTotal(novoValor, ordemEncontrada.pecas)
+
+        localStorage.setItem("ordens", JSON.stringify(ordens))
 
         console.log(`Ordem de Serviço #${ordemEncontrada.id} foi atualizada com sucesso`)
 }
@@ -259,7 +396,7 @@ function atualizarTabelaOrdens() {
           <td>${ordem.status}</td>
         
           <td>
-                <button class="btn-editar" onclick="editarOrdemServico(${ordem.id})">Editar</button>
+                <button class="btn-editar" onclick="prepararEdicaoOrdem(${ordem.id})">Editar</button>
                 <button class="btn-excluir" onclick="excluirOrdem(${ordem.id})">Excluir</button>
           </td>
         `
@@ -269,4 +406,40 @@ function atualizarTabelaOrdens() {
 }
 
 
+function excluirOrdem(id) {
+
+    const indiceOrdem = ordens.findIndex(ordem => ordem.id === id)
+
+    if(indiceOrdem !== -1) { 
+
+        ordens.splice(indiceOrdem, 1) 
+
+        localStorage.setItem("ordens", JSON.stringify(ordens))
+
+        console.log(`Ordem ${id} excluida com sucesso`)
+
+        atualizarTabelaOrdens()
+    } else {
+
+        console.log("Ordem não encontrada")
+    }
+}
+
+
+function prepararEdicaoOrdem(id) {
+
+    const ordem = ordens.find(ordem => ordem.id === id)
+
+    if(!ordem) return 
+
+    cliente.value = ordem.clienteId
+    bicicleta.value = ordem.bicicletaId
+    servico.value = ordem.servico
+    valor.value = ordem.valorServico
+
+    ordemEditando = id
+}
+
 window.listarOrdensServicos = listarOrdensServicos
+window.excluirOrdem = excluirOrdem
+window.prepararEdicaoOrdem = prepararEdicaoOrdem
